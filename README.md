@@ -24,15 +24,7 @@ O formulário está disponível em:
 |---|---|
 | `index.html` | Formulário completo (HTML + CSS + JavaScript) |
 | `logo_novaplast.png` | Logo da Novaplast (branca com fundo transparente) |
-| `DOCUMENTACAO.md` | Documentação técnica para manutenção e alterações |
-| `GUIA_FATURAMENTO.md` | Guia de uso para a equipe de faturamento |
 | `README.md` | Este arquivo |
-
-## Documentação
-
-Para alterar campos, cores, e-mails ou configurações do Formspree, consulte o arquivo `DOCUMENTACAO.md`.
-
-Para dúvidas sobre como receber e interpretar os cadastros, a equipe de faturamento pode consultar o `GUIA_FATURAMENTO.md`.
 
 ## Tecnologias utilizadas
 
