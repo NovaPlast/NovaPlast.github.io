@@ -215,6 +215,40 @@
     .success-screen p { color: #4a5f72; font-size: 0.92rem; }
     .success-icon { font-size: 3rem; margin-bottom: 14px; color: #2a7a4f; }
 
+    /* LGPD */
+    .lgpd-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: #f0f5fb;
+      border: 1.5px solid #c0d0e0;
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin-top: 16px;
+      cursor: pointer;
+    }
+
+    .lgpd-box input[type="checkbox"] {
+      accent-color: #1a56a0;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      cursor: pointer;
+    }
+
+    .lgpd-box label {
+      font-size: 0.82rem;
+      color: #4a5f72;
+      font-weight: 400;
+      cursor: pointer;
+      line-height: 1.5;
+    }
+
+    .lgpd-box label strong {
+      color: #1a2a3a;
+    }
+
     @media (max-width: 560px) {
       .card { padding: 18px 14px; }
       .type-selector { grid-template-columns: 1fr; }
@@ -566,6 +600,14 @@
         </div>
       </div>
 
+      <div class="lgpd-box" onclick="document.getElementById('lgpd-check').click()">
+        <input type="checkbox" id="lgpd-check" onclick="event.stopPropagation()" />
+        <label for="lgpd-check">
+          Concordo que meus dados pessoais sejam coletados e utilizados pela <strong>Novaplast</strong> para fins de cadastro comercial, conforme a <strong>Lei Geral de Proteção de Dados (LGPD – Lei nº 13.709/2018)</strong>.
+        </label>
+      </div>
+      <span class="field-error" id="lgpd-error" style="margin-top:6px;">Você precisa aceitar para continuar.</span>
+
       <div style="display:flex; gap:10px;">
         <button type="button" class="btn-submit" style="background:#6b8099; flex:0 0 110px;" onclick="voltarPasso1()">Voltar</button>
         <button type="button" class="btn-submit" onclick="irParaPasso3()">Continuar</button>
@@ -735,6 +777,15 @@
 
   function irParaPasso3() {
     if (!validarPasso2()) return;
+    const lgpd = document.getElementById('lgpd-check');
+    const lgpdError = document.getElementById('lgpd-error');
+    if (!lgpd.checked) {
+      lgpdError.classList.add('visible');
+      lgpd.closest('.lgpd-box').style.borderColor = '#c0392b';
+      return;
+    }
+    lgpdError.classList.remove('visible');
+    lgpd.closest('.lgpd-box').style.borderColor = '#c0d0e0';
     document.getElementById('passo-2').style.display = 'none';
     document.getElementById('passo-3').style.display = 'block';
     atualizarSteps(3); window.scrollTo(0,0);
