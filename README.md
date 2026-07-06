@@ -11,7 +11,7 @@ O formulário está disponível em:
 
 - Cadastro para três tipos de cliente: Pessoa Física, Pessoa Jurídica e Produtor Rural
 - Campos condicionais — cada tipo exibe apenas os campos necessários
-- Validação matemática de CPF e CNP
+- Validação matemática de CPF e CNPJ
 - Máscaras de formatação para CPF, CNPJ, telefone e CEP
 - Validação de todos os campos obrigatórios antes de avançar
 - Envio automático por e-mail para a equipe de faturamento via Formspree
