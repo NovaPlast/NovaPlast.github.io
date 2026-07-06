@@ -407,6 +407,11 @@
               <span class="field-error" id="pf-estado-error">Campo obrigatório.</span>
             </div>
           </div>
+
+          <div class="field">
+            <label>Local de Entrega</label>
+            <input type="text" name="Local_Entrega" id="pf-entrega" placeholder="Preencher somente se for diferente do endereço acima" />
+          </div>
         </div>
       </div>
 
@@ -426,11 +431,16 @@
             <input type="text" name="Nome_Fantasia" id="pj-fantasia" placeholder="Nome fantasia (se houver)" />
           </div>
 
-          <div class="field-group">
+          <div class="field-group three">
             <div class="field">
               <label>CNPJ <span class="required">*</span></label>
               <input type="text" name="CNPJ" id="pj-cnpj" placeholder="00.000.000/0000-00" maxlength="18" />
               <span class="field-error" id="pj-cnpj-error">CNPJ inválido.</span>
+            </div>
+            <div class="field">
+              <label>Telefone <span class="required">*</span></label>
+              <input type="tel" name="Telefone" id="pj-fone" placeholder="(00) 00000-0000" maxlength="15" />
+              <span class="field-error" id="pj-fone-error">Campo obrigatório.</span>
             </div>
             <div class="field">
               <label>E-mail <span class="required">*</span></label>
@@ -506,6 +516,11 @@
               <span class="field-error" id="pj-estado-error">Campo obrigatório.</span>
             </div>
           </div>
+
+          <div class="field">
+            <label>Local de Entrega</label>
+            <input type="text" name="Local_Entrega" id="pj-entrega" placeholder="Preencher somente se for diferente do endereço acima" />
+          </div>
         </div>
       </div>
 
@@ -533,10 +548,17 @@
             </div>
           </div>
 
-          <div class="field">
-            <label>E-mail <span class="required">*</span></label>
-            <input type="email" id="pr-email" placeholder="email@exemplo.com" name="Email_PR" />
-            <span class="field-error" id="pr-email-error">E-mail inválido.</span>
+          <div class="field-group">
+            <div class="field">
+              <label>Telefone <span class="required">*</span></label>
+              <input type="tel" name="Telefone" id="pr-fone" placeholder="(00) 00000-0000" maxlength="15" />
+              <span class="field-error" id="pr-fone-error">Campo obrigatório.</span>
+            </div>
+            <div class="field">
+              <label>E-mail <span class="required">*</span></label>
+              <input type="email" id="pr-email" placeholder="email@exemplo.com" name="Email_PR" />
+              <span class="field-error" id="pr-email-error">E-mail inválido.</span>
+            </div>
           </div>
 
           <div class="divider"></div>
@@ -596,6 +618,11 @@
               </select>
               <span class="field-error" id="pr-estado-error">Campo obrigatório.</span>
             </div>
+          </div>
+
+          <div class="field">
+            <label>Local de Entrega</label>
+            <input type="text" name="Local_Entrega" id="pr-entrega" placeholder="Preencher somente se for diferente do endereço acima" />
           </div>
         </div>
       </div>
@@ -686,7 +713,7 @@
 
   ['pf-cpf','pr-cpf'].forEach(id => { const el = document.getElementById(id); if(el) el.addEventListener('input', () => mascararCPF(el)); });
   const cnpjEl = document.getElementById('pj-cnpj'); if(cnpjEl) cnpjEl.addEventListener('input', () => mascararCNPJ(cnpjEl));
-  const foneEl = document.getElementById('pf-fone'); if(foneEl) foneEl.addEventListener('input', () => mascararFone(foneEl));
+  ['pf-fone','pj-fone','pr-fone'].forEach(id => { const el = document.getElementById(id); if(el) el.addEventListener('input', () => mascararFone(el)); });
 
   ['pf-cep','pj-cep','pr-cep'].forEach(id => {
     const el = document.getElementById(id);
@@ -815,6 +842,7 @@
     if (tipoSelecionado === 'pj') {
       v('pj-razao','pj-razao-error',!campoVazio('pj-razao'));
       v('pj-cnpj','pj-cnpj-error',cnpjValido('pj-cnpj'));
+      v('pj-fone','pj-fone-error',!campoVazio('pj-fone'));
       v('pj-email','pj-email-error',emailValido('pj-email'));
       v('pj-logradouro','pj-logradouro-error',!campoVazio('pj-logradouro'));
       v('pj-numero','pj-numero-error',!campoVazio('pj-numero'));
@@ -828,6 +856,7 @@
       v('pr-nome','pr-nome-error',!campoVazio('pr-nome'));
       v('pr-cpf','pr-cpf-error',cpfValido('pr-cpf'));
       v('pr-ie','pr-ie-error',!campoVazio('pr-ie'));
+      v('pr-fone','pr-fone-error',!campoVazio('pr-fone'));
       v('pr-email','pr-email-error',emailValido('pr-email'));
       v('pr-logradouro','pr-logradouro-error',!campoVazio('pr-logradouro'));
       v('pr-numero','pr-numero-error',!campoVazio('pr-numero'));
