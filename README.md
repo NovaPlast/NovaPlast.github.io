@@ -11,9 +11,8 @@ O formulário está disponível em:
 
 - Cadastro para três tipos de cliente: Pessoa Física, Pessoa Jurídica e Produtor Rural
 - Campos condicionais — cada tipo exibe apenas os campos necessários
-- Validação matemática de CPF e CNPJ
+- Validação matemática de CPF e CNP
 - Máscaras de formatação para CPF, CNPJ, telefone e CEP
-- Preenchimento automático de endereço por CEP (API ViaCEP)
 - Validação de todos os campos obrigatórios antes de avançar
 - Envio automático por e-mail para a equipe de faturamento via Formspree
 - Instruções para envio de documentos por e-mail
@@ -30,5 +29,4 @@ O formulário está disponível em:
 
 - HTML, CSS e JavaScript puro (sem frameworks)
 - [Formspree](https://formspree.io) para envio de e-mail
-- [ViaCEP](https://viacep.com.br) para preenchimento automático de endereço
 - GitHub Pages para hospedagem
