@@ -376,7 +376,7 @@
             </div>
             <div class="field">
               <label>Número <span class="required">*</span></label>
-              <input type="text" name="Numero" id="pf-numero" placeholder="Nº" />
+              <input type="text" name="Numero" id="pf-numero" placeholder="Nº ou S/N" />
               <span class="field-error" id="pf-numero-error">Campo obrigatório.</span>
             </div>
             <div class="field">
@@ -475,7 +475,7 @@
             </div>
             <div class="field">
               <label>Número <span class="required">*</span></label>
-              <input type="text" name="Numero" id="pj-numero" placeholder="Nº" />
+              <input type="text" name="Numero" id="pj-numero" placeholder="Nº ou S/N" />
               <span class="field-error" id="pj-numero-error">Campo obrigatório.</span>
             </div>
             <div class="field">
@@ -566,7 +566,7 @@
             </div>
             <div class="field">
               <label>Número <span class="required">*</span></label>
-              <input type="text" name="Numero" id="pr-numero" placeholder="Nº" />
+              <input type="text" name="Numero" id="pr-numero" placeholder="Nº ou S/N" />
               <span class="field-error" id="pr-numero-error">Campo obrigatório.</span>
             </div>
             <div class="field">
@@ -625,7 +625,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a56a0" stroke-width="2">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
           </svg>
-          <span style="font-size:0.95rem; font-weight:700; color:#1a56a0;">brunosoza2004@gmail.com</span>
+          <span style="font-size:0.95rem; font-weight:700; color:#1a56a0;">cadastro@novaplast.com.br</span>
         </div>
       </div>
 
@@ -687,65 +687,11 @@
   ['pf-cpf','pr-cpf'].forEach(id => { const el = document.getElementById(id); if(el) el.addEventListener('input', () => mascararCPF(el)); });
   const cnpjEl = document.getElementById('pj-cnpj'); if(cnpjEl) cnpjEl.addEventListener('input', () => mascararCNPJ(cnpjEl));
   const foneEl = document.getElementById('pf-fone'); if(foneEl) foneEl.addEventListener('input', () => mascararFone(foneEl));
-  // CEP com busca automática
-  async function buscarCEP(input, prefixo) {
-    mascararCEP(input);
-    const cep = input.value.replace(/\D/g, '');
-    if (cep.length !== 8) return;
-
-    input.style.background = '#f0f5fb';
-    input.placeholder = 'Buscando...';
-
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 5000);
-      const resp = await fetch(`https://viacep.com.br/ws/${cep}/json/`, { signal: controller.signal });
-      clearTimeout(timeout);
-      const data = await resp.json();
-
-      input.style.background = '';
-      input.placeholder = '00000-000';
-
-      if (data.erro) {
-        input.style.background = '#fdecea';
-        setTimeout(() => { input.style.background = ''; }, 2000);
-        mostrarAlerta('CEP não encontrado. Preencha o endereço manualmente.', 'error');
-        return;
-      }
-
-      // Só preenche campos que estão vazios
-      const logEl = document.getElementById(`${prefixo}-logradouro`);
-      const bairEl = document.getElementById(`${prefixo}-bairro`);
-      const cidEl  = document.getElementById(`${prefixo}-cidade`);
-      const ufEl   = document.getElementById(`${prefixo}-estado`);
-
-      if (logEl && !logEl.value.trim()) logEl.value = data.logradouro || '';
-      if (bairEl && !bairEl.value.trim()) bairEl.value = data.bairro || '';
-      if (cidEl  && !cidEl.value.trim())  cidEl.value  = data.localidade || '';
-      if (ufEl   && !ufEl.value)          ufEl.value   = data.uf || '';
-
-      input.style.background = '#f0fbf4';
-      setTimeout(() => { input.style.background = ''; }, 1500);
-
-    } catch(e) {
-      input.style.background = '';
-      input.placeholder = '00000-000';
-      if (e.name === 'AbortError') {
-        mostrarAlerta('Tempo esgotado ao buscar o CEP. Preencha o endereço manualmente.', 'error');
-      }
-    }
-  }
 
   ['pf-cep','pj-cep','pr-cep'].forEach(id => {
     const el = document.getElementById(id);
-    const prefixo = id.split('-')[0];
-    if (el) {
-      el.addEventListener('input', () => mascararCEP(el));
-      el.addEventListener('blur', () => buscarCEP(el, prefixo));
-    }
+    if (el) el.addEventListener('input', () => mascararCEP(el));
   });
-
-
 
   // NAVEGAÇÃO
   function atualizarSteps(passo) {
@@ -796,6 +742,24 @@
     document.getElementById('passo-2').style.display = 'block';
     atualizarSteps(2); window.scrollTo(0,0);
   }
+
+  // BLOQUEIA ENTER DE AVANÇAR/ENVIAR SEM VALIDAÇÃO
+  document.getElementById('cadastro-form').addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter') return;
+    if (e.target.tagName === 'TEXTAREA') return; // permite Enter normalmente em textarea, se houver
+
+    // Sempre bloqueia o comportamento padrão do Enter (que tentaria submeter o form)
+    e.preventDefault();
+
+    if (document.getElementById('passo-1').style.display !== 'none') {
+      irParaPasso2();
+    } else if (document.getElementById('passo-2').style.display !== 'none') {
+      // Se o Enter foi pressionado num select, evita disparar validação a cada troca de UF
+      if (e.target.tagName === 'SELECT') return;
+      irParaPasso3();
+    }
+    // No passo 3 não há campos de texto, então não faz nada especial aqui
+  });
 
   // VALIDAÇÃO
   function mostrarErro(id, show) { const el = document.getElementById(id); if(el) el.classList.toggle('visible', show); }
